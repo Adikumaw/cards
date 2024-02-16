@@ -1,4 +1,4 @@
-class player {
+export default class player {
   constructor(name) {
     this.name = name;
     this.scores = new Array();

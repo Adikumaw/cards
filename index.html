@@ -3,7 +3,50 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>cards</title>
+    <title>call-break</title>
+    <link rel="stylesheet" type="text/css" href="resource/css/main.css" />
+    <script type="module" src="resource/js/main.js" defer></script>
   </head>
-  <body></body>
+  <body>
+    <nav>
+      <h1>Call-Break Tracker</h1>
+    </nav>
+    <section class="game_body">
+      <div class="start_game">
+        <button class="start">Start Tracker</button>
+      </div>
+
+      <div class="player_count_selector" style="display: none">
+        <h2>Select number of players</h2>
+        <div class="select_player_count">
+          <button class="player_count" id="player_count_2">2</button>
+          <button class="player_count" id="player_count_3">3</button>
+          <button class="player_count" id="player_count_4">4</button>
+          <button class="player_count" id="player_count_5">5</button>
+          <button class="player_count" id="player_count_6">6</button>
+        </div>
+      </div>
+
+      <div class="input_player_names" style="display: none">
+        <h2>Enter name of player no.1</h2>
+        <input type="text" id="player_name" />
+        <button class="name_input_btn">submit</button>
+      </div>
+      <!-- <div class="players_count">
+        <label>Enter number of players: </label>
+        <div class="select_player_count">
+          <button class="player_count_2" onclick="setPlayerCount(2)">2</button>
+          <button class="player_count_2" onclick="setPlayerCount(3)">3</button>
+          <button class="player_count_2" onclick="setPlayerCount(4)">4</button>
+          <button class="player_count_2" onclick="setPlayerCount(5)">5</button>
+          <button class="player_count_2" onclick="setPlayerCount(6)">6</button>
+        </div>
+      </div>
+      <div class="player_name">
+        <label for="input_player_name">Enter player name: </label>
+        <input type="text" id="input_player_name" name="input_player_name" />
+      </div>
+      <button id="submit_name">submit</button> -->
+    </section>
+  </body>
 </html>

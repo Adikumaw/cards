@@ -1,0 +1,75 @@
+body {
+  height: 100vh;
+  display: flex;
+  /* background-color: rgb(177, 166, 151); */
+  flex-direction: column;
+  align-items: center;
+}
+
+nav {
+  display: grid;
+  place-items: center;
+}
+
+.game_body {
+  height: 90%;
+  width: 90%;
+  border-radius: 2%;
+  background-color: bisque;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.start {
+  width: 10rem;
+  height: 6rem;
+  border-radius: 2rem;
+  border: none;
+  background-color: crimson;
+  font-size: large;
+  font-weight: 600;
+  color: yellow;
+}
+
+.player_count_selector {
+  flex-direction: column;
+}
+
+.select_player_count {
+  display: grid;
+  place-items: center;
+}
+.select_player_count button,
+.name_input_btn {
+  width: 80%;
+  height: 2rem;
+  margin-bottom: 1rem;
+  font-size: large;
+  font-weight: 800;
+  border: none;
+  background-color: crimson;
+  border-radius: 2rem;
+  color: yellow;
+}
+
+.input_player_names {
+  width: 90%;
+  flex-direction: column;
+  align-items: center;
+}
+.name_input_btn {
+  margin-top: 2rem;
+  height: 4rem;
+  width: 90%;
+}
+input {
+  padding: 0.6rem;
+  border: 2px solid rgb(190, 190, 190);
+  border-radius: 1rem;
+  font-size: large;
+  font-weight: 600;
+  width: 90%;
+  text-align: center;
+}

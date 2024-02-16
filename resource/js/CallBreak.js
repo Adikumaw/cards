@@ -1,6 +1,6 @@
 import player from "./player.js";
 
-class callBreak {
+export default class callBreak {
   constructor() {
     this.players = new Map();
   }

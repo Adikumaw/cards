@@ -42,6 +42,13 @@ export default class callBreak {
     return playerScores;
   }
 
+  getPlayerCount() {
+    let playerCount = 0;
+    for (let [key, value] of this.players) {
+      playerCount++;
+    }
+    return playerCount;
+  }
   // returns names of players
   getPlayerNames() {
     let playerNames = new Array();

@@ -1,9 +1,15 @@
+* {
+  margin: none;
+  padding: none;
+}
+
 html,
 body {
   height: max-content;
   display: flex;
   height: 100%;
   width: 100%;
+  min-width: 360px;
   /* background-color: rgb(177, 166, 151); */
   flex-direction: column;
   align-items: center;
@@ -19,28 +25,27 @@ nav {
   width: 90%;
   border-radius: 2%;
   background-color: bisque;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  display: grid;
 }
 .start_container {
-  width: 30%;
   min-width: 10rem;
+  display: grid;
+  place-items: center;
 }
 .start {
-  width: 100%;
-  height: 6rem;
+  padding: 2.5rem 4rem;
   border-radius: 2rem;
   border: none;
   background-color: rgb(220, 20, 60);
-  font-size: large;
+  font-size: larger;
   font-weight: 600;
   color: yellow;
 }
 
 .player_count_container {
   flex-direction: column;
+  align-self: center;
+  justify-self: center;
 }
 
 .player_count_selector {
@@ -61,7 +66,6 @@ nav {
 }
 
 .input_player_names {
-  width: 90%;
   flex-direction: column;
   align-items: center;
 }
@@ -81,28 +85,50 @@ input {
 }
 
 .game_body {
+  justify-self: center;
   display: flex;
-  width: 95%;
   flex-direction: column;
+  width: 95%;
 }
 .rounds_container {
   display: flex;
   flex-direction: column;
   /* justify-content: center; */
-  /* align-items: center; */
 }
-.rounds_container h3 {
-  margin-right: 1rem;
+.rounds_container h2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .rounds_selector {
-  /* width: 30%; */
-  flex-shrink: 3;
+  display: flex;
 }
-.rounds_count {
+.rounds_count,
+.call_count {
   border: 2px solid rgb(190, 190, 190);
   border-radius: 0.5rem;
   background-color: lightblue;
-  width: 2rem;
-  height: 2rem;
+  min-width: 2rem;
+  flex-grow: 1;
   font-size: large;
+}
+.call_container {
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+}
+.call_container h2 {
+  align-self: center;
+}
+/* player call selector detail */
+.player_call {
+  display: flex;
+  align-items: center;
+}
+.call_selector {
+  flex-grow: 2;
+  display: flex;
+}
+.call_container h2 {
+  flex-grow: 1;
 }

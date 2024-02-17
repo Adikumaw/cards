@@ -3,7 +3,8 @@ import callBreak from "./CallBreak.js";
 let myGame = new callBreak();
 let playerCount;
 let roundsCount;
-const startGame = document.getElementsByClassName("start");
+const startGameContainer = document.getElementsByClassName("start_container");
+const startGameBtn = document.getElementsByClassName("start");
 const playerCountContainer = document.getElementsByClassName(
   "player_count_container"
 );
@@ -14,9 +15,12 @@ const gameBody = document.getElementsByClassName("game_body");
 const cardsToDist = document.getElementsByClassName("game_body")[0].children[0];
 const roundsHeading = document.getElementsByClassName("rounds_container");
 const roundsCountButton = document.querySelectorAll(".rounds_count");
+const callContainer = document.getElementsByClassName("call_container");
+const callSelector = document.getElementsByClassName("call_selector");
 
-startGame[0].addEventListener("click", () => {
-  startGame[0].style.display = "none";
+startGameBtn[0].addEventListener("click", () => {
+  startGameBtn[0].style.display = "none";
+  startGameContainer[0].style.display = "none";
   playerCountContainer[0].style.display = "flex";
 });
 
@@ -66,7 +70,30 @@ function setupGameBody() {
   cardsToDist.textContent = `Distribute \"${Math.floor(
     52 / myGame.getPlayerCount()
   )}\" cards to each player!`;
-  buildTable(myGame.getPlayerNames()); //TODO build new table
+  buildCallSelector();
+  // buildTable(myGame.getPlayerNames()); //TODO build new table
+}
+
+function buildCallSelector() {
+  let players = myGame.getPlayerNames();
+  for (let player of players) {
+    let addPlayer = `<div class="player_call">
+    <h2>${player}:</h2>
+    <div class="call_selector">
+      <button class="call_count">1</button>
+      <button class="call_count">2</button>
+      <button class="call_count">3</button>
+      <button class="call_count">4</button>
+      <button class="call_count">5</button>
+      <button class="call_count">6</button>
+      <button class="call_count">7</button>
+      <button class="call_count">8</button>
+      <button class="call_count">9</button>
+      <button class="call_count">10</button>
+    </div>
+  </div>`;
+    callContainer[0].innerHTML += addPlayer;
+  }
 }
 // Add event listner to rounds_count_buttons
 roundsCountButton.forEach((button) => {

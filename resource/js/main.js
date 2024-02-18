@@ -174,17 +174,21 @@ function buildCallSelector() {
 
 function buildTable() {
   let table = document.createElement("table");
-  // build headers
+  // build headers row
   let headerRow = table.insertRow();
+  let rowType = headerRow.insertCell();
+  rowType.textContent = "Names";
+  rowType.className = "table_heading";
   for (let player of myGame.getPlayerNames()) {
     let playerName = headerRow.insertCell();
     playerName.textContent = player;
     playerName.className = "table_heading";
   }
-  // build rows
+  // build scores row
   let playerScores = myGame.getPlayerScores();
   for (let i = 0; i < roundsCount; i++) {
     let row = table.insertRow();
+    row.insertCell().textContent = "score";
     for (let player of myGame.getPlayerNames()) {
       let playerScore = row.insertCell();
       if (i < playerScores.get(player).length) {
@@ -196,5 +200,17 @@ function buildTable() {
       }
     }
   }
+  // build totals row
+  let playerTotals = myGame.getTotals();
+  let totalRow = table.insertRow();
+  rowType = totalRow.insertCell();
+  rowType.textContent = "Totals";
+  rowType.className = "table_totals";
+  for (let player of myGame.getPlayerNames()) {
+    let playerTotal = totalRow.insertCell();
+    playerTotal.textContent = playerTotals.get(player);
+    playerTotal.className = "table_totals";
+  }
+
   tableContainer[0].appendChild(table);
 }

@@ -156,16 +156,16 @@ function buildCallSelector() {
       });
     });
     i++;
-    // call confirm button
-    let callConfirm = document.getElementsByClassName("call_confirm_btn");
-    callConfirm[0].addEventListener("click", function () {
-      if (myGame.isPlayerReady()) {
-        callContainer[0].style.display = "none";
-      } else {
-        alert("please give call for all players");
-      }
-    });
   }
+  // call confirm button
+  let callConfirm = document.getElementsByClassName("call_confirm_btn");
+  callConfirm[0].addEventListener("click", function () {
+    if (myGame.isPlayerReady()) {
+      callContainer[0].style.display = "none";
+    } else {
+      alert("please give call for all players");
+    }
+  });
 }
 
 function buildTable() {}

@@ -100,6 +100,7 @@ function setupGameBody() {
 
 function buildCallSelector() {
   let players = myGame.getPlayerNames();
+  // create call selector for each player
   for (let player of players) {
     let addPlayer = `<div class="player_call">
     <h2>${player}:</h2>
@@ -122,24 +123,32 @@ function buildCallSelector() {
   </div>`;
     callContainer[0].innerHTML += addPlayer;
   }
+  // add for event listner call count button
   let callCountButton = new Array();
+  // map of (player name) -> (thair index)
   let playerNameIndex = new Map();
   let i = 0;
   for (let player of players) {
+    // build player name with index i
     playerNameIndex.set(player, i);
+    // build call count button array
     callCountButton.push(document.querySelectorAll(".call_count." + player));
-    // Add event listner to rounds_count_buttons
+    // Add event listner to call count button according to their index
     callCountButton[i].forEach((button) => {
+      // add event listner
       button.addEventListener("click", function () {
+        // extract player name from class name
         let playerName = button.classList[1];
+        // make background color to light blue
         callCountButton[playerNameIndex.get(playerName)].forEach((button) => {
           button.style.backgroundColor = "lightblue";
         });
         // add call for player
         myGame.addCall(playerName, parseInt(button.textContent));
+        // add background color to red
         button.style.backgroundColor = "crimson";
-        myGame.addScore(playerName, 5);
-        console.log(myGame.getTotals());
+        // myGame.addScore(playerName, 5);
+        // console.log(myGame.getTotals());
       });
     });
     i++;

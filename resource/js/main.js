@@ -23,6 +23,8 @@ const gameBody = document.getElementsByClassName("game_body");
 const cardsToDist = document.getElementsByClassName("game_body")[0].children[0];
 // player calls
 const callContainer = document.getElementsByClassName("call_container");
+// player table
+const tableContainer = document.getElementsByClassName("table_container");
 
 // on click of start button -> removes start button and displays player count Selector
 startGameBtn[0].addEventListener("click", () => {
@@ -162,10 +164,37 @@ function buildCallSelector() {
   callConfirm[0].addEventListener("click", function () {
     if (myGame.isPlayerReady()) {
       callContainer[0].style.display = "none";
+      tableContainer[0].style.display = "block";
+      buildTable();
     } else {
       alert("please give call for all players");
     }
   });
 }
 
-function buildTable() {}
+function buildTable() {
+  let table = document.createElement("table");
+  // build headers
+  let headerRow = table.insertRow();
+  for (let player of myGame.getPlayerNames()) {
+    let playerName = headerRow.insertCell();
+    playerName.textContent = player;
+    playerName.className = "table_heading";
+  }
+  // build rows
+  let playerScores = myGame.getPlayerScores();
+  for (let i = 0; i < roundsCount; i++) {
+    let row = table.insertRow();
+    for (let player of myGame.getPlayerNames()) {
+      let playerScore = row.insertCell();
+      if (i < playerScores.get(player).length) {
+        playerScore.textContent = playerScores.get(player)[i];
+      } else if (i == playerScores.get(player).length) {
+        playerScore.textContent = myGame.getPlayerCall(player);
+      } else {
+        playerScore.textContent = "0";
+      }
+    }
+  }
+  tableContainer[0].appendChild(table);
+}

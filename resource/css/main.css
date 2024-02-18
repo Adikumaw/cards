@@ -166,3 +166,22 @@ input {
 .call_confirm_btn {
   align-self: center;
 }
+
+/* player table */
+.table_container {
+  width: 100%;
+}
+.table_container table {
+  width: 100%;
+  border: 2px solid crimson;
+}
+.table_heading {
+  border-bottom: 2px solid crimson;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+.table_container td {
+  text-align: center;
+  border-left: 2px solid grey;
+  border-right: 2px solid grey;
+}

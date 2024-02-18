@@ -55,7 +55,7 @@ export default class callBreak {
   // returns players Numbers
   getPlayerCount() {
     let playerCount = 0;
-    for (let [key, value] of this.players) {
+    for (let player of this.players) {
       playerCount++;
     }
     return playerCount;
@@ -102,5 +102,12 @@ export default class callBreak {
       totals.set(key, value.getTotal());
     }
     return totals;
+  }
+  getPlayerCall(name) {
+    if (this.players.has(name)) {
+      let playerCall = this.players.get(name).getCall();
+      return playerCall;
+    }
+    return 0;
   }
 }

@@ -11,11 +11,12 @@
     <nav>
       <h1>Call-Break Tracker</h1>
     </nav>
+    <!-- start button -->
     <section class="game_container">
       <div class="start_container">
         <button class="start">Start Tracker</button>
       </div>
-
+      <!-- player count selector -->
       <div class="player_count_container" style="display: none">
         <h2>Select number of players</h2>
         <div class="player_count_selector">
@@ -26,32 +27,52 @@
           <button class="player_count">6</button>
         </div>
       </div>
-
+      <!-- input player names -->
       <div class="input_player_names" style="display: none">
         <h2>Enter name of player no.1</h2>
         <input type="text" id="player_name" />
         <button class="name_input_btn">submit</button>
       </div>
+      <!-- rounds to play selector -->
+      <div class="rounds_container" style="display: none">
+        <h2>----------- Select rounds to play: -----------</h2>
+        <div class="rounds_selector">
+          <button class="rounds_count">1</button>
+          <button class="rounds_count">2</button>
+          <button class="rounds_count">3</button>
+          <button class="rounds_count">4</button>
+          <button class="rounds_count">5</button>
+          <button class="rounds_count">6</button>
+          <button class="rounds_count">7</button>
+          <button class="rounds_count">8</button>
+          <button class="rounds_count">9</button>
+          <button class="rounds_count">10</button>
+        </div>
+      </div>
 
       <div class="game_body" style="display: none">
         <h3></h3>
-        <div class="rounds_container">
-          <h2>----------- Select rounds to play: -----------</h2>
-          <div class="rounds_selector">
-            <button class="rounds_count">1</button>
-            <button class="rounds_count">2</button>
-            <button class="rounds_count">3</button>
-            <button class="rounds_count">4</button>
-            <button class="rounds_count">5</button>
-            <button class="rounds_count">6</button>
-            <button class="rounds_count">7</button>
-            <button class="rounds_count">8</button>
-            <button class="rounds_count">9</button>
-            <button class="rounds_count">10</button>
-          </div>
-        </div>
         <div class="call_container">
           <h2>---- Make call For each player ----</h2>
+          <div class="player_call">
+            <h2>${player}:</h2>
+            <div class="call_selector">
+              <div class="call_selector_1to5">
+                <button class="call_count ${player}">1</button>
+                <button class="call_count ${player}">2</button>
+                <button class="call_count ${player}">3</button>
+                <button class="call_count ${player}">4</button>
+                <button class="call_count ${player}">5</button>
+              </div>
+              <div class="call_selector_6to10">
+                <button class="call_count ${player}">6</button>
+                <button class="call_count ${player}">7</button>
+                <button class="call_count ${player}">8</button>
+                <button class="call_count ${player}">9</button>
+                <button class="call_count ${player}">10</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

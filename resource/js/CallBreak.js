@@ -2,9 +2,10 @@ import player from "./player.js";
 
 export default class callBreak {
   constructor() {
+    // A map of player name and player Class
     this.players = new Map();
   }
-  // Add a player to the game
+  // This function adds player( of unique name only ) and returns if added or not
   addPlayer(name) {
     if (this.players.has(name)) {
       return false;
@@ -12,7 +13,7 @@ export default class callBreak {
     this.players.set(name, new player(name));
     return true;
   }
-  // Set call for player
+  // Sets call for player and return boolean if added or not
   addCall(name, call) {
     if (this.players.has(name)) {
       let myPlayer = this.players.get(name);
@@ -21,7 +22,7 @@ export default class callBreak {
     }
     return false;
   }
-  // Add score of player
+  // Adds and calc score on the basis of current call and points gained
   addScore(name, score) {
     if (this.players.has(name)) {
       let myPlayer = this.players.get(name);
@@ -33,7 +34,7 @@ export default class callBreak {
 
   // --------------------- Getters -----------------------
 
-  // returns names of players with their scores array as map
+  // returns Map of (names of players) -> (their scores)
   getPlayerScores() {
     let playerScores = new Map();
     for (let [key, value] of this.players) {
@@ -42,6 +43,7 @@ export default class callBreak {
     return playerScores;
   }
 
+  // returns players Numbers
   getPlayerCount() {
     let playerCount = 0;
     for (let [key, value] of this.players) {
@@ -49,7 +51,7 @@ export default class callBreak {
     }
     return playerCount;
   }
-  // returns names of players
+  // returns players Names
   getPlayerNames() {
     let playerNames = new Array();
     for (let [key, value] of this.players) {
@@ -58,14 +60,17 @@ export default class callBreak {
     return playerNames;
   }
 
-  // returns ranks and player name as key
+  // returns map of (player names) -> (their Ranks)
   getRanks() {
+    // Map of (player names) -> (their total scores)
     let totals = new Map();
+    // Map of (player names) -> (Ranks)
     let ranks = new Map();
+    // get totals
     for (let [key, value] of this.players) {
       totals.set(key, value.getTotal());
     }
-    // Make array out of map
+    // Make array out of totals
     let arrayOfTotals = Array.from(totals);
     // sort the array
     arrayOfTotals.sort((a, b) => b[1] - a[1]);
@@ -77,10 +82,11 @@ export default class callBreak {
       }
       ranks.set(myMap[0], rank);
     });
+
     return ranks;
   }
 
-  // returns total points with player name as key
+  // returns map of (player names) -> (their totals)
   getTotals() {
     let totals = new Map();
     for (let [key, value] of this.players) {

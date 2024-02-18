@@ -14,12 +14,12 @@ body {
   flex-direction: column;
   align-items: center;
 }
-
+/* navigation */
 nav {
   display: grid;
   place-items: center;
 }
-
+/* main game container */
 .game_container {
   height: 90%;
   width: 90%;
@@ -27,6 +27,7 @@ nav {
   background-color: bisque;
   display: grid;
 }
+/* start button */
 .start_container {
   min-width: 10rem;
   display: grid;
@@ -41,17 +42,20 @@ nav {
   font-weight: 600;
   color: yellow;
 }
-
+/* player count selector */
+/* rounds to play selector */
+.rounds_container,
 .player_count_container {
   flex-direction: column;
   align-self: center;
   justify-self: center;
 }
-
+.rounds_selector,
 .player_count_selector {
   display: grid;
   place-items: center;
 }
+.rounds_selector button,
 .player_count_selector button,
 .name_input_btn {
   width: 80%;
@@ -64,7 +68,7 @@ nav {
   border-radius: 2rem;
   color: yellow;
 }
-
+/* player name inputs */
 .input_player_names {
   flex-direction: column;
   align-items: center;
@@ -83,27 +87,41 @@ input {
   width: 90%;
   text-align: center;
 }
-
+/* game body */
 .game_body {
   justify-self: center;
   display: flex;
   flex-direction: column;
   width: 95%;
 }
-.rounds_container {
+
+/* player count selector */
+.call_container {
+  /* margin-top: 3rem; */
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
 }
-.rounds_container h2 {
+.call_container h2 {
+  align-self: center;
+}
+/* player call */
+.player_call {
   display: flex;
-  flex-direction: column;
   align-items: center;
+  margin-bottom: 2rem;
 }
-.rounds_selector {
+.player_call h2 {
+  flex-grow: 1;
+}
+.call_selector {
+  flex-grow: 2;
+  display: flex;
+  flex-direction: column;
+}
+.call_selector_1to5,
+.call_selector_6to10 {
   display: flex;
 }
-.rounds_count,
 .call_count {
   border: 2px solid rgb(190, 190, 190);
   border-radius: 0.5rem;
@@ -112,23 +130,4 @@ input {
   flex-grow: 1;
   font-size: large;
 }
-.call_container {
-  margin-top: 3rem;
-  display: flex;
-  flex-direction: column;
-}
-.call_container h2 {
-  align-self: center;
-}
 /* player call selector detail */
-.player_call {
-  display: flex;
-  align-items: center;
-}
-.call_selector {
-  flex-grow: 2;
-  display: flex;
-}
-.call_container h2 {
-  flex-grow: 1;
-}

@@ -1,8 +1,12 @@
 export default class player {
   constructor(name) {
+    // Name of the player
     this.name = name;
+    // Scores the player gained
     this.scores = new Array();
+    // current call of player
     this.call;
+    // total scores of the player
     this.total = 0;
   }
   // ---------------------- Getters & Setters ------------------
@@ -19,12 +23,23 @@ export default class player {
     return this.scores;
   }
   // ------------------------ Methods -----------------------
+  // This function evaluates score by comparing the call and gained points and adds the result to the scores & total
   addScore(score) {
     if (score < this.call) {
-      this.scores.push(score * -1);
+      // Negative the call
+      this.scores.push(this.call * -1);
     } else {
-      this.scores.push(call + (score - call) / 10);
+      // calc the score and push
+      this.scores.push(this.call + (score - this.call) / 10);
     }
-    total += this.scores[this.scores.length - 1];
+
+    // add latest value of scores to the total
+    this.total += this.scores[this.scores.length - 1];
+
+    // fix the number with one fraction value
+    this.total = this.total.toFixed(1);
+
+    // Fix total to float
+    this.total = parseFloat(this.total);
   }
 }

@@ -31,6 +31,15 @@ export default class callBreak {
     }
     return false;
   }
+  // check all players are ready(given their call)
+  isPlayerReady() {
+    for (let [name, player] of this.players) {
+      if (!player.isReady()) {
+        return false;
+      }
+    }
+    return true;
+  }
 
   // --------------------- Getters -----------------------
 

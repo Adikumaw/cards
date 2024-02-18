@@ -5,7 +5,7 @@ export default class player {
     // Scores the player gained
     this.scores = new Array();
     // current call of player
-    this.call;
+    this.call = 0;
     // total scores of the player
     this.total = 0;
   }
@@ -23,6 +23,9 @@ export default class player {
     return this.scores;
   }
   // ------------------------ Methods -----------------------
+  isReady() {
+    return this.call == 0 ? false : true;
+  }
   // This function evaluates score by comparing the call and gained points and adds the result to the scores & total
   addScore(score) {
     if (score < this.call) {
@@ -41,5 +44,8 @@ export default class player {
 
     // Fix total to float
     this.total = parseFloat(this.total);
+
+    // reset call
+    this.call = 0;
   }
 }

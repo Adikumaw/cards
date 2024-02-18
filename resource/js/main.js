@@ -21,6 +21,7 @@ const roundsCountButton = document.querySelectorAll(".rounds_count");
 const gameBody = document.getElementsByClassName("game_body");
 // card to distribute line
 const cardsToDist = document.getElementsByClassName("game_body")[0].children[0];
+// player calls
 const callContainer = document.getElementsByClassName("call_container");
 
 // on click of start button -> removes start button and displays player count Selector
@@ -101,8 +102,9 @@ function setupGameBody() {
 function buildCallSelector() {
   let players = myGame.getPlayerNames();
   // create call selector for each player
+  let addPlayer = "";
   for (let player of players) {
-    let addPlayer = `<div class="player_call">
+    addPlayer += `<div class="player_call">
     <h2>${player}:</h2>
     <div class="call_selector">
       <div class="call_selector_1to5">
@@ -121,8 +123,10 @@ function buildCallSelector() {
       </div>
     </div>
   </div>`;
-    callContainer[0].innerHTML += addPlayer;
   }
+  addPlayer += `<button class="call_confirm_btn">Confirm Calls</button>`;
+  callContainer[0].innerHTML += addPlayer;
+
   // add for event listner call count button
   let callCountButton = new Array();
   // map of (player name) -> (thair index)
@@ -152,5 +156,16 @@ function buildCallSelector() {
       });
     });
     i++;
+    // call confirm button
+    let callConfirm = document.getElementsByClassName("call_confirm_btn");
+    callConfirm[0].addEventListener("click", function () {
+      if (myGame.isPlayerReady()) {
+        callContainer[0].style.display = "none";
+      } else {
+        alert("please give call for all players");
+      }
+    });
   }
 }
+
+function buildTable() {}

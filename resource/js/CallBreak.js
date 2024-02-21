@@ -4,6 +4,21 @@ export default class callBreak {
   constructor() {
     // A map of player name and player Class
     this.players = new Map();
+    this.rounds = 0;
+    this.currentRound = 1;
+  }
+  resetGame() {
+    for (let [name, player] of players) {
+      player.resetGame();
+    }
+  }
+  // set rounds to play
+  setRounds(rounds) {
+    this.rounds = rounds;
+  }
+  // get current round
+  getCurrentRound() {
+    return this.currentRound;
   }
   // This function adds player( of unique name only ) and returns if added or not
   addPlayer(name) {
@@ -22,19 +37,40 @@ export default class callBreak {
     }
     return false;
   }
-  // Adds and calc score on the basis of current call and points gained
-  addScore(name, score) {
+  // sets current score
+  setScore(name, score) {
     if (this.players.has(name)) {
       let myPlayer = this.players.get(name);
-      myPlayer.addScore(score);
+      myPlayer.setScore(score);
+      return true;
+    }
+    return false;
+  }
+
+  // calc score on the basis of current call and points gained
+  calcScores() {
+    if (this.isPlayersScored() && this.currentRound <= this.rounds) {
+      for (let [name, player] of this.players) {
+        player.calcScore();
+      }
+      this.currentRound++;
       return true;
     }
     return false;
   }
   // check all players are ready(given their call)
-  isPlayerReady() {
+  isPlayersReady() {
     for (let [name, player] of this.players) {
       if (!player.isReady()) {
+        return false;
+      }
+    }
+    return true;
+  }
+  // check all players are ready(given their scores)
+  isPlayersScored() {
+    for (let [name, player] of this.players) {
+      if (!player.isScored()) {
         return false;
       }
     }
@@ -107,6 +143,13 @@ export default class callBreak {
     if (this.players.has(name)) {
       let playerCall = this.players.get(name).getCall();
       return playerCall;
+    }
+    return 0;
+  }
+  getPlayerScore(name) {
+    if (this.players.has(name)) {
+      let playerScore = this.players.get(name).getScore();
+      return playerScore;
     }
     return 0;
   }

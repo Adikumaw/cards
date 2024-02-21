@@ -84,7 +84,8 @@ h2::after {
 .rounds_selector button,
 .player_count_selector button,
 .name_input_btn,
-.call_confirm_btn {
+.call_confirm_btn,
+.score_confirm_btn {
   width: 80%;
   padding: 0.5rem;
   /* height: 2rem; */
@@ -123,38 +124,49 @@ input {
   width: 95%;
 }
 
-/* player count selector */
-.call_container {
+/* player call selector */
+/* player Score selector */
+.call_container,
+.score_container {
   /* margin-top: 3rem; */
   display: flex;
   flex-direction: column;
 }
-.call_container h2 {
+.call_container h2,
+.score_container h2 {
   align-self: center;
 }
 /* player call */
-.player_call {
+/* player score */
+.player_call,
+.player_score {
   display: flex;
   align-items: center;
   margin-bottom: 2rem;
 }
-.player_call h2 {
+.player_call h2,
+.player_score h2 {
   flex-grow: 1;
 }
 .player_call h2::after,
-.player_call h2::before {
+.player_call h2::before,
+.player_score h2::after,
+.player_score h2::before {
   display: none;
 }
-
+.score_selector,
 .call_selector {
   flex-grow: 2;
   display: flex;
   flex-direction: column;
 }
 .call_selector_1to5,
-.call_selector_6to10 {
+.call_selector_6to10,
+.score_selector_0to5,
+.score_selector_6to10 {
   display: flex;
 }
+.score_count,
 .call_count {
   border: 1px solid rgb(190, 190, 190);
   border-radius: 0.4rem;
@@ -163,6 +175,7 @@ input {
   flex-grow: 1;
   font-size: large;
 }
+.score_confirm_btn,
 .call_confirm_btn {
   align-self: center;
 }
@@ -179,7 +192,7 @@ input {
 .table_heading {
   border-bottom: 2px solid crimson;
   font-weight: bold;
-  font-size: 1.2em;
+  font-size: clamp(12px, 2vw, 24px);
 }
 .table_container td {
   text-align: center;

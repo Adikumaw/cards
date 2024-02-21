@@ -30,7 +30,7 @@
       <!-- input player names -->
       <div class="input_player_names" style="display: none">
         <h2>Enter name of player no.1</h2>
-        <input type="text" id="player_name" />
+        <input type="text" id="name_input" />
         <button class="name_input_btn">submit</button>
       </div>
       <!-- rounds to play selector -->
@@ -52,15 +52,17 @@
 
       <div class="game_body" style="display: none">
         <h3></h3>
+        <!-- player scores table -->
+        <div class="table_container">
+          <table class="score_table"></table>
+        </div>
         <!-- player call selector -->
         <div class="call_container">
           <h2>Make call For each player</h2>
         </div>
-        <!-- player scores table -->
-        <div class="table_container" style="display: none"></div>
         <!-- player score selector -->
         <div class="score_container" style="display: none">
-          <h2>add score For each player</h2>
+          <h2>Add score For each player</h2>
         </div>
       </div>
     </section>

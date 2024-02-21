@@ -12,7 +12,7 @@ const playerCountContainer = document.getElementsByClassName(
 );
 const playerCountButtons = document.querySelectorAll(".player_count");
 // player name input
-const inputPlayerName = document.getElementsByClassName("input_player_names");
+const inputNameClass = document.getElementsByClassName("input_player_names");
 const nameInputBtn = document.getElementsByClassName("name_input_btn");
 // rounds to play selector
 const roundsContainer = document.getElementsByClassName("rounds_container");
@@ -25,6 +25,8 @@ const cardsToDist = document.getElementsByClassName("game_body")[0].children[0];
 const callContainer = document.getElementsByClassName("call_container");
 // player table
 const tableContainer = document.getElementsByClassName("table_container");
+// player scores
+const scoreContainer = document.getElementsByClassName("score_container");
 
 // on click of start button -> removes start button and displays player count Selector
 startGameBtn[0].addEventListener("click", () => {
@@ -39,7 +41,8 @@ playerCountButtons.forEach((button) => {
   button.addEventListener("click", function () {
     setPlayerCount(parseInt(button.textContent));
     playerCountContainer[0].style.display = "none";
-    inputPlayerName[0].style.display = "flex";
+    inputNameClass[0].style.display = "flex";
+    name_input.focus(); // focus on input box
   });
 });
 // Set players count
@@ -47,36 +50,47 @@ function setPlayerCount(num) {
   playerCount = parseInt(num);
 }
 
-// takes player names and adds to the players, assures uniqueness of name
+// event listner for name input
 nameInputBtn[0].addEventListener("click", () => {
-  if (player_name.value == "") {
+  addPlayerName();
+});
+name_input.addEventListener("keypress", (event) => {
+  if (event.key === "Enter") {
+    addPlayerName();
+  }
+});
+// takes player names and adds to the players, assures uniqueness of name
+function addPlayerName() {
+  // alert if name is empty
+  if (name_input.value == "") {
     alert("please enter any name first");
   } else {
     // add player name to myGame
-    if (!myGame.addPlayer(player_name.value)) {
+    if (!myGame.addPlayer(name_input.value)) {
       alert("please enter different name");
-      player_name.value = ""; // null the name value
+      name_input.value = ""; // null the name value
     } else {
       // increment player number
-      let playerNumberMessage = inputPlayerName[0].children[0].textContent;
+      let playerNumberMessage = inputNameClass[0].children[0].textContent;
       let newNum =
         parseInt(playerNumberMessage[playerNumberMessage.length - 1]) + 1;
-      inputPlayerName[0].children[0].textContent =
+      inputNameClass[0].children[0].textContent =
         "Enter name of player no." + newNum;
 
-      player_name.value = ""; // null the name value
+      name_input.value = ""; // null the name value
+      name_input.focus(); // focus on input box
       playerCount--;
+
       // Proceed to rounds to play after input
       if (playerCount < 1) {
-        inputPlayerName[0].style.display = "none";
-
+        inputNameClass[0].style.display = "none";
+        // console it
         console.log(myGame.getPlayerNames());
-
         roundsContainer[0].style.display = "flex";
       }
     }
   }
-});
+}
 
 // Add event listner to rounds_count_buttons
 // Proceed to setup game
@@ -91,89 +105,21 @@ roundsCountButton.forEach((button) => {
 // set roundsCount
 function setRoundsToPlay(num) {
   roundsCount = parseInt(num);
+  myGame.setRounds(roundsCount);
 }
 
 function setupGameBody() {
   cardsToDist.textContent = `Distribute \"${Math.floor(
     52 / myGame.getPlayerCount()
   )}\" cards to each player!`;
+  buildTable();
   buildCallSelector();
-  // buildTable(myGame.getPlayerNames()); //TODO build new table
-}
-
-function buildCallSelector() {
-  let players = myGame.getPlayerNames();
-  // create call selector for each player
-  let addPlayer = "";
-  for (let player of players) {
-    addPlayer += `<div class="player_call">
-    <h2>${player}:</h2>
-    <div class="call_selector">
-      <div class="call_selector_1to5">
-        <button class="call_count ${player}">1</button>
-        <button class="call_count ${player}">2</button>
-        <button class="call_count ${player}">3</button>
-        <button class="call_count ${player}">4</button>
-        <button class="call_count ${player}">5</button>
-      </div>
-      <div class="call_selector_6to10">
-        <button class="call_count ${player}">6</button>
-        <button class="call_count ${player}">7</button>
-        <button class="call_count ${player}">8</button>
-        <button class="call_count ${player}">9</button>
-        <button class="call_count ${player}">10</button>
-      </div>
-    </div>
-  </div>`;
-  }
-  addPlayer += `<button class="call_confirm_btn">Confirm Calls</button>`;
-  callContainer[0].innerHTML += addPlayer;
-
-  // add for event listner call count button
-  let callCountButton = new Array();
-  // map of (player name) -> (thair index)
-  let playerNameIndex = new Map();
-  let i = 0;
-  for (let player of players) {
-    // build player name with index i
-    playerNameIndex.set(player, i);
-    // build call count button array
-    callCountButton.push(document.querySelectorAll(".call_count." + player));
-    // Add event listner to call count button according to their index
-    callCountButton[i].forEach((button) => {
-      // add event listner
-      button.addEventListener("click", function () {
-        // extract player name from class name
-        let playerName = button.classList[1];
-        // make background color to light blue
-        callCountButton[playerNameIndex.get(playerName)].forEach((button) => {
-          button.style.backgroundColor = "lightblue";
-        });
-        // add call for player
-        myGame.addCall(playerName, parseInt(button.textContent));
-        // add background color to red
-        button.style.backgroundColor = "crimson";
-        // myGame.addScore(playerName, 5);
-        // console.log(myGame.getTotals());
-      });
-    });
-    i++;
-  }
-  // call confirm button
-  let callConfirm = document.getElementsByClassName("call_confirm_btn");
-  callConfirm[0].addEventListener("click", function () {
-    if (myGame.isPlayerReady()) {
-      callContainer[0].style.display = "none";
-      tableContainer[0].style.display = "block";
-      buildTable();
-    } else {
-      alert("please give call for all players");
-    }
-  });
+  buildScoreSelector();
 }
 
 function buildTable() {
   let table = document.createElement("table");
+  table.className = "score_table";
   // build headers row
   let headerRow = table.insertRow();
   let rowType = headerRow.insertCell();
@@ -212,5 +158,160 @@ function buildTable() {
     playerTotal.className = "table_totals";
   }
 
-  tableContainer[0].appendChild(table);
+  var oldTable = document.querySelector(".score_table");
+
+  // tableContainer[0].appendChild(table);
+  tableContainer[0].replaceChild(table, oldTable);
+}
+
+function buildCallSelector() {
+  // array of player names
+  let players = myGame.getPlayerNames();
+  // create call selector for each player
+  let addPlayerHTML = "";
+  for (let player of players) {
+    addPlayerHTML += `<div class="player_call">
+    <h2>${player}:</h2>
+    <div class="call_selector">
+    <div class="call_selector_1to5">
+    <button class="call_count ${player}">1</button>
+    <button class="call_count ${player}">2</button>
+    <button class="call_count ${player}">3</button>
+    <button class="call_count ${player}">4</button>
+    <button class="call_count ${player}">5</button>
+    </div>
+    <div class="call_selector_6to10">
+    <button class="call_count ${player}">6</button>
+    <button class="call_count ${player}">7</button>
+    <button class="call_count ${player}">8</button>
+    <button class="call_count ${player}">9</button>
+    <button class="call_count ${player}">10</button>
+    </div>
+    </div>
+    </div>`;
+  }
+  addPlayerHTML += `<button class="call_confirm_btn">Confirm Calls</button>`;
+  callContainer[0].innerHTML += addPlayerHTML;
+
+  // add for event listner call count button
+  let callCountButton = new Array();
+  let i = 0;
+  for (let player of players) {
+    // build call count button array
+    callCountButton.push(document.querySelectorAll(".call_count." + player));
+    // Add event listner to call count button according to their index
+    callCountButton[i].forEach((button) => {
+      // add event listner
+      button.addEventListener("click", function () {
+        // extract player name from class name
+        let playerName = button.classList[1];
+        // make background color to light blue
+        callCountButton[players.indexOf(playerName)].forEach((button) => {
+          button.style.backgroundColor = "lightblue";
+        });
+        // add call for player
+        myGame.addCall(playerName, parseInt(button.textContent));
+        // add background color to red
+        button.style.backgroundColor = "crimson";
+      });
+    });
+    i++;
+  }
+  // call confirm button
+  let callConfirm = document.getElementsByClassName("call_confirm_btn");
+  callConfirm[0].addEventListener("click", function () {
+    if (myGame.isPlayersReady()) {
+      // fixing call selector btn to default
+      fixCallSelectorUI();
+      callContainer[0].style.display = "none";
+      scoreContainer[0].style.display = "flex";
+      buildTable();
+    } else {
+      alert("please give call for all players");
+    }
+  });
+}
+
+function buildScoreSelector() {
+  // array of player names
+  let players = myGame.getPlayerNames();
+  // create call selector for each player
+  let addPlayerHTML = "";
+  for (let player of players) {
+    addPlayerHTML += `<div class="player_score">
+    <h2>${player}:</h2>
+    <div class="score_selector">
+    <div class="score_selector_0to5">
+    <button class="score_count ${player}">0</button>
+    <button class="score_count ${player}">1</button>
+    <button class="score_count ${player}">2</button>
+    <button class="score_count ${player}">3</button>
+    <button class="score_count ${player}">4</button>
+    <button class="score_count ${player}">5</button>
+    </div>
+    <div class="score_selector_6to10">
+    <button class="score_count ${player}">6</button>
+    <button class="score_count ${player}">7</button>
+    <button class="score_count ${player}">8</button>
+    <button class="score_count ${player}">9</button>
+    <button class="score_count ${player}">10</button>
+    </div>
+    </div>
+    </div>`;
+  }
+  addPlayerHTML += `<button class="score_confirm_btn">Confirm Scores</button>`;
+  scoreContainer[0].innerHTML += addPlayerHTML;
+
+  // add for event listner call count button
+  let scoreCountButton = new Array();
+  let i = 0;
+  for (let player of players) {
+    // build call count button array
+    scoreCountButton.push(document.querySelectorAll(".score_count." + player));
+    // Add event listner to call count button according to their index
+    scoreCountButton[i].forEach((button) => {
+      // add event listner
+      button.addEventListener("click", function () {
+        // extract player name from class name
+        let playerName = button.classList[1];
+        // make background color to light blue
+        scoreCountButton[players.indexOf(playerName)].forEach((button) => {
+          button.style.backgroundColor = "lightblue";
+        });
+        // add call for player
+        myGame.setScore(playerName, parseInt(button.textContent));
+        // add background color to red
+        button.style.backgroundColor = "crimson";
+      });
+    });
+    i++;
+  }
+  // score confirm button
+  let scoreConfirm = document.getElementsByClassName("score_confirm_btn");
+  scoreConfirm[0].addEventListener("click", function () {
+    if (myGame.calcScores()) {
+      // fixing score selector btn to default
+      fixScoreSelectorUI();
+      scoreContainer[0].style.display = "none";
+      callContainer[0].style.display = "flex";
+      myGame.calcScores();
+      buildTable();
+    } else {
+      alert("please give Score for all players");
+    }
+  });
+}
+
+// brings selector button color to default(lightblue)
+function fixCallSelectorUI() {
+  let callCount = document.querySelectorAll(".call_count");
+  callCount.forEach((button) => {
+    button.style.backgroundColor = "lightblue";
+  });
+}
+function fixScoreSelectorUI() {
+  let scoreCount = document.querySelectorAll(".score_count");
+  scoreCount.forEach((button) => {
+    button.style.backgroundColor = "lightblue";
+  });
 }

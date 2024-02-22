@@ -151,7 +151,9 @@ input {
 .player_call h2::after,
 .player_call h2::before,
 .player_score h2::after,
-.player_score h2::before {
+.player_score h2::before,
+.winner_div h2::after,
+.winner_div h2::before {
   display: none;
 }
 .score_selector,
@@ -201,4 +203,23 @@ input {
 }
 .table_totals {
   border-top: 2px solid crimson;
+}
+/* winner board */
+.winner_container {
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+.winner_div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.winner_div img {
+  width: 50%;
+}
+.winner_div h2 {
+  margin: 0;
+  color: goldenrod;
+  font-size: clamp(35px, 5vw, 45px);
 }

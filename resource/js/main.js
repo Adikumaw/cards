@@ -20,13 +20,15 @@ const roundsCountButton = document.querySelectorAll(".rounds_count");
 // game body
 const gameBody = document.getElementsByClassName("game_body");
 // card to distribute line
-const cardsToDist = document.getElementsByClassName("game_body")[0].children[0];
+const cardsToDist = document.getElementsByClassName("cards_to_dist");
 // player calls
 const callContainer = document.getElementsByClassName("call_container");
 // player table
 const tableContainer = document.getElementsByClassName("table_container");
 // player scores
 const scoreContainer = document.getElementsByClassName("score_container");
+// Winner Board
+const winnerContainer = document.getElementsByClassName("winner_container");
 
 // on click of start button -> removes start button and displays player count Selector
 startGameBtn[0].addEventListener("click", () => {
@@ -109,7 +111,7 @@ function setRoundsToPlay(num) {
 }
 
 function setupGameBody() {
-  cardsToDist.textContent = `Distribute \"${Math.floor(
+  cardsToDist[0].textContent = `Distribute \"${Math.floor(
     52 / myGame.getPlayerCount()
   )}\" cards to each player!`;
   buildTable();
@@ -296,6 +298,12 @@ function buildScoreSelector() {
       callContainer[0].style.display = "flex";
       myGame.calcScores();
       buildTable();
+      if (!myGame.isRoundsLeft()) {
+        callContainer[0].style.display = "none";
+        cardsToDist[0].style.display = "none";
+        winnerContainer[0].style.display = "flex";
+        buildWinnerBoard();
+      }
     } else {
       alert("please give Score for all players");
     }
@@ -314,4 +322,23 @@ function fixScoreSelectorUI() {
   scoreCount.forEach((button) => {
     button.style.backgroundColor = "lightblue";
   });
+}
+
+function buildWinnerBoard() {
+  var ranks = myGame.getRanks();
+  ranks = Array.from(ranks);
+  console.log(ranks);
+
+  var winner = document.getElementsByClassName("winner_div");
+  var otherRanks = document.getElementsByClassName("other_ranks_div");
+  var winImg = new Image();
+  winImg.src = "/resource/images/winner2.gif";
+
+  winImg.onload = function () {
+    winner[0].appendChild(winImg);
+    winner[0].innerHTML += `<h2>${ranks[0][1]}. ${ranks[0][0]}</h2>`;
+  };
+  for (let i = 1; i < ranks.length; i++) {
+    otherRanks[0].innerHTML += `<h3>${ranks[i][1]}. ${ranks[i][0]}</h3>`;
+  }
 }

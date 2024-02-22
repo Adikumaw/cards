@@ -10,7 +10,12 @@ export default class callBreak {
   resetGame() {
     for (let [name, player] of players) {
       player.resetGame();
+      this.currentRound = 1;
     }
+  }
+  newGame() {
+    this.players.clear();
+    this.currentRound = 1;
   }
   // set rounds to play
   setRounds(rounds) {
@@ -49,7 +54,7 @@ export default class callBreak {
 
   // calc score on the basis of current call and points gained
   calcScores() {
-    if (this.isPlayersScored() && this.currentRound <= this.rounds) {
+    if (this.isPlayersScored() && this.isRoundsLeft()) {
       for (let [name, player] of this.players) {
         player.calcScore();
       }
@@ -57,6 +62,9 @@ export default class callBreak {
       return true;
     }
     return false;
+  }
+  isRoundsLeft() {
+    return this.currentRound <= this.rounds;
   }
   // check all players are ready(given their call)
   isPlayersReady() {

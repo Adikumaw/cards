@@ -332,7 +332,7 @@ function buildWinnerBoard() {
   var winner = document.getElementsByClassName("winner_div");
   var otherRanks = document.getElementsByClassName("other_ranks_div");
   var winImg = new Image();
-  winImg.src = "//resource/images/winner.gif";
+  winImg.src = "resource/images/winner.gif";
 
   winImg.onload = function () {
     winner[0].appendChild(winImg);

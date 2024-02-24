@@ -8,7 +8,7 @@ export default class callBreak {
     this.currentRound = 1;
   }
   resetGame() {
-    for (let [name, player] of players) {
+    for (let [name, player] of this.players) {
       player.resetGame();
       this.currentRound = 1;
     }

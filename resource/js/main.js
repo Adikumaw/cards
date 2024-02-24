@@ -1,8 +1,12 @@
 import callBreak from "./CallBreak.js";
 
 let myGame = new callBreak();
-let playerCount;
-let roundsCount;
+let playerCount = 0;
+let roundsCount = 0;
+
+// Navigation
+const newGame = document.getElementsByClassName("new_game");
+const restart = document.getElementsByClassName("restart");
 // start button
 const startGameContainer = document.getElementsByClassName("start_container");
 const startGameBtn = document.getElementsByClassName("start");
@@ -29,6 +33,37 @@ const tableContainer = document.getElementsByClassName("table_container");
 const scoreContainer = document.getElementsByClassName("score_container");
 // Winner Board
 const winnerContainer = document.getElementsByClassName("winner_container");
+const winner = document.getElementsByClassName("winner_div");
+const otherRanks = document.getElementsByClassName("other_ranks_div");
+var winImg = new Image();
+winImg.src = "resource/images/winner.gif";
+
+newGame[0].addEventListener("click", () => {
+  window.location.reload();
+});
+
+restart[0].addEventListener("click", () => {
+  if (roundsCount != 0) {
+    myGame.resetGame();
+    roundsCount = 0;
+    roundsContainer[0].style.display = "flex";
+    gameBody[0].style.display = "none";
+    winnerContainer[0].style.display = "none";
+    callContainer[0].style.display = "none";
+    scoreContainer[0].style.display = "none";
+
+    // removing all previous score table
+    for (let i = scoreContainer[0].children.length - 1; i > 0; i--) {
+      scoreContainer[0].children[i].remove();
+    }
+    // removing all previous call table
+    for (let i = callContainer[0].children.length - 1; i > 0; i--) {
+      callContainer[0].children[i].remove();
+    }
+    winner[0].innerHTML = "";
+    otherRanks[0].innerHTML = "";
+  }
+});
 
 // on click of start button -> removes start button and displays player count Selector
 startGameBtn[0].addEventListener("click", () => {
@@ -116,6 +151,7 @@ function setupGameBody() {
   )}\" cards to each player!`;
   buildTable();
   buildCallSelector();
+  callContainer[0].style.display = "flex";
   buildScoreSelector();
 }
 
@@ -327,17 +363,9 @@ function fixScoreSelectorUI() {
 function buildWinnerBoard() {
   var ranks = myGame.getRanks();
   ranks = Array.from(ranks);
-  console.log(ranks);
 
-  var winner = document.getElementsByClassName("winner_div");
-  var otherRanks = document.getElementsByClassName("other_ranks_div");
-  var winImg = new Image();
-  winImg.src = "resource/images/winner.gif";
-
-  winImg.onload = function () {
-    winner[0].appendChild(winImg);
-    winner[0].innerHTML += `<h2>${ranks[0][1]}. ${ranks[0][0]}</h2>`;
-  };
+  winner[0].appendChild(winImg);
+  winner[0].innerHTML += `<h2>${ranks[0][1]}. ${ranks[0][0]}</h2>`;
 
   for (let i = 1; i < ranks.length; i++) {
     otherRanks[0].innerHTML += `<h3>${ranks[i][1]}. ${ranks[i][0]}</h3>`;

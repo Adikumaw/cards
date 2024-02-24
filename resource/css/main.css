@@ -17,8 +17,24 @@ body {
 }
 /* navigation */
 nav {
-  display: grid;
-  place-items: center;
+  width: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+nav h1 {
+  font-size: clamp(16px, 3vw, 30px);
+}
+.new_game,
+.restart {
+  width: clamp(90px, 18vw, 200px);
+  height: clamp(30px, 7vw, 50px);
+  font-size: clamp(12px, 3vw, 18px);
+  font-weight: 700;
+  border: none;
+  background-color: crimson;
+  border-radius: 8px;
+  color: yellow;
 }
 /* main game container */
 .game_container {

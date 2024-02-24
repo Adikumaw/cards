@@ -332,13 +332,12 @@ function buildWinnerBoard() {
   var winner = document.getElementsByClassName("winner_div");
   var otherRanks = document.getElementsByClassName("other_ranks_div");
   var winImg = new Image();
-  winImg.src = "~/resource/images/winner.gif";
+  winImg.src = "//resource/images/winner.gif";
 
   winImg.onload = function () {
     winner[0].appendChild(winImg);
+    winner[0].innerHTML += `<h2>${ranks[0][1]}. ${ranks[0][0]}</h2>`;
   };
-
-  winner[0].innerHTML += `<h2>${ranks[0][1]}. ${ranks[0][0]}</h2>`;
 
   for (let i = 1; i < ranks.length; i++) {
     otherRanks[0].innerHTML += `<h3>${ranks[i][1]}. ${ranks[i][0]}</h3>`;

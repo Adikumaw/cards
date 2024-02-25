@@ -1,6 +1,6 @@
 @font-face {
   font-family: "poker"; /* Specify the desired font family name */
-  src: url("/resource/fonts/PokerInOctoberDemo-Dxm3.otf") format("opentype"); /* Path to your OTF font file */
+  src: url("resource/fonts/PokerInOctoberDemo-Dxm3.otf") format("opentype"); /* Path to your OTF font file */
 }
 
 * {
@@ -18,7 +18,7 @@ body {
   color: #ffffff;
 }
 body {
-  background-image: url("/resource/images/dark-poker-background.jpg");
+  background-image: url("resource/images/dark-poker-background.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   min-height: 100vh;

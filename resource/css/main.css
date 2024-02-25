@@ -1,6 +1,6 @@
 @font-face {
   font-family: "poker"; /* Specify the desired font family name */
-  src: url("./resource/fonts/PokerInOctoberDemo-Dxm3.otf") format("opentype"); /* Path to your OTF font file */
+  src: url("../fonts/PokerInOctoberDemo-Dxm3.otf") format("opentype"); /* Path to your OTF font file */
 }
 
 * {

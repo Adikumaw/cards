@@ -101,11 +101,13 @@ function addPlayerName() {
   // alert if name is empty
   if (name_input.value == "") {
     alert("please enter any name first");
+    name_input.focus(); // focus on input box
   } else {
     // add player name to myGame
     if (!myGame.addPlayer(name_input.value)) {
       alert("please enter different name");
       name_input.value = ""; // null the name value
+      name_input.focus(); // focus on input box
     } else {
       // increment player number
       let playerNumberMessage = inputNameClass[0].children[0].textContent;
@@ -245,12 +247,12 @@ function buildCallSelector() {
         let playerName = button.classList[1];
         // make background color to light blue
         callCountButton[players.indexOf(playerName)].forEach((button) => {
-          button.style.backgroundColor = "lightblue";
+          button.style.backgroundColor = "black";
         });
         // add call for player
         myGame.addCall(playerName, parseInt(button.textContent));
         // add background color to red
-        button.style.backgroundColor = "crimson";
+        button.style.backgroundColor = "#1c44ab";
       });
     });
     i++;
@@ -314,12 +316,12 @@ function buildScoreSelector() {
         let playerName = button.classList[1];
         // make background color to light blue
         scoreCountButton[players.indexOf(playerName)].forEach((button) => {
-          button.style.backgroundColor = "lightblue";
+          button.style.backgroundColor = "black";
         });
         // add call for player
         myGame.setScore(playerName, parseInt(button.textContent));
         // add background color to red
-        button.style.backgroundColor = "crimson";
+        button.style.backgroundColor = "#1c44ab";
       });
     });
     i++;
@@ -350,13 +352,13 @@ function buildScoreSelector() {
 function fixCallSelectorUI() {
   let callCount = document.querySelectorAll(".call_count");
   callCount.forEach((button) => {
-    button.style.backgroundColor = "lightblue";
+    button.style.backgroundColor = "black";
   });
 }
 function fixScoreSelectorUI() {
   let scoreCount = document.querySelectorAll(".score_count");
   scoreCount.forEach((button) => {
-    button.style.backgroundColor = "lightblue";
+    button.style.backgroundColor = "black";
   });
 }
 
@@ -368,6 +370,6 @@ function buildWinnerBoard() {
   winner[0].innerHTML += `<h2>${ranks[0][1]}. ${ranks[0][0]}</h2>`;
 
   for (let i = 1; i < ranks.length; i++) {
-    otherRanks[0].innerHTML += `<h3>${ranks[i][1]}. ${ranks[i][0]}</h3>`;
+    otherRanks[0].innerHTML += `<h2>${ranks[i][1]}. ${ranks[i][0]}</h2>`;
   }
 }

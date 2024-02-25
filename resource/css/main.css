@@ -18,7 +18,7 @@ body {
   color: #ffffff;
 }
 body {
-  background-image: url("./resource/images/dark-poker-background.jpg");
+  background-image: url("../images/dark-poker-background.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   min-height: 100vh;

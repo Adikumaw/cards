@@ -47,6 +47,7 @@ export default class player {
   isScored() {
     return this.score == -1 ? false : true;
   }
+
   // This function evaluates score by comparing the call and gained points and adds the result to the scores & total
   calcScore() {
     if (this.score < this.call) {

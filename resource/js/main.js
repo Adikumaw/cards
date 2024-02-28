@@ -1,47 +1,52 @@
 import callBreak from "./CallBreak.js";
 
+const key = "all-father";
 let myGame = new callBreak();
 let playerCount = 0;
 let roundsCount = 0;
 
-// Navigation
+// ------------------- HTML components -------------------
+// ------------------- Navigation -------------------
 const newGame = document.getElementsByClassName("new_game");
 const restart = document.getElementsByClassName("restart");
-// start button
+// ------------------- start button -------------------
 const startGameContainer = document.getElementsByClassName("start_container");
 const startGameBtn = document.getElementsByClassName("start");
-// player count selector
+// ------------------- player count selector -------------------
 const playerCountContainer = document.getElementsByClassName(
   "player_count_container"
 );
 const playerCountButtons = document.querySelectorAll(".player_count");
-// player name input
+// ------------------- player name input -------------------
 const inputNameClass = document.getElementsByClassName("input_player_names");
 const nameInputBtn = document.getElementsByClassName("name_input_btn");
-// rounds to play selector
+// ------------------- rounds to play selector -------------------
 const roundsContainer = document.getElementsByClassName("rounds_container");
 const roundsCountButton = document.querySelectorAll(".rounds_count");
-// game body
+// ------------------- game body -------------------
 const gameBody = document.getElementsByClassName("game_body");
-// card to distribute line
+// ------------------- card to distribute line -------------------
 const cardsToDist = document.getElementsByClassName("cards_to_dist");
-// player calls
+// ------------------- player calls -------------------
 const callContainer = document.getElementsByClassName("call_container");
-// player table
+// ------------------- player table -------------------
 const tableContainer = document.getElementsByClassName("table_container");
-// player scores
+// ------------------- player scores -------------------
 const scoreContainer = document.getElementsByClassName("score_container");
-// Winner Board
+//------------------- Winner Board -------------------
 const winnerContainer = document.getElementsByClassName("winner_container");
 const winner = document.getElementsByClassName("winner_div");
 const otherRanks = document.getElementsByClassName("other_ranks_div");
 var winImg = new Image();
 winImg.src = "resource/images/winner.gif";
 
+// ------------------- Restart and New Game button -------------------
+
+// New game button click action
 newGame[0].addEventListener("click", () => {
   window.location.reload();
 });
-
+// Re-start button click action
 restart[0].addEventListener("click", () => {
   if (roundsCount != 0) {
     myGame.resetGame();
@@ -65,12 +70,17 @@ restart[0].addEventListener("click", () => {
   }
 });
 
-// on click of start button -> removes start button and displays player count Selector
+// ------------------- Start page -------------------
+
+// On click of start button
+// -> removes start button and displays player count Selector
 startGameBtn[0].addEventListener("click", () => {
   startGameBtn[0].style.display = "none";
   startGameContainer[0].style.display = "none";
   playerCountContainer[0].style.display = "flex";
 });
+
+// ------------------- Player count Page -------------------
 
 // Add event listner to player_count_buttons
 // proceed to input player name stage
@@ -86,6 +96,8 @@ playerCountButtons.forEach((button) => {
 function setPlayerCount(num) {
   playerCount = parseInt(num);
 }
+
+// ------------------- Name Input Page -------------------
 
 // event listner for name input
 nameInputBtn[0].addEventListener("click", () => {
@@ -126,10 +138,14 @@ function addPlayerName() {
         // console it
         console.log(myGame.getPlayerNames());
         roundsContainer[0].style.display = "flex";
+        // Saving data
+        store(JSON.stringify(myGame));
       }
     }
   }
 }
+
+// ------------------- Rounds to play -------------------
 
 // Add event listner to rounds_count_buttons
 // Proceed to setup game
@@ -146,6 +162,8 @@ function setRoundsToPlay(num) {
   roundsCount = parseInt(num);
   myGame.setRounds(roundsCount);
 }
+
+// ------------------- Main game Page -------------------
 
 function setupGameBody() {
   cardsToDist[0].textContent = `Distribute \"${Math.floor(
@@ -266,6 +284,8 @@ function buildCallSelector() {
       callContainer[0].style.display = "none";
       scoreContainer[0].style.display = "flex";
       buildTable();
+      // Saving data
+      store(JSON.stringify(myGame));
     } else {
       alert("please give call for all players");
     }
@@ -334,8 +354,10 @@ function buildScoreSelector() {
       fixScoreSelectorUI();
       scoreContainer[0].style.display = "none";
       callContainer[0].style.display = "flex";
-      myGame.calcScores();
+      // myGame.calcScores();
       buildTable();
+      // Saving data
+      store(JSON.stringify(myGame));
       if (!myGame.isRoundsLeft()) {
         callContainer[0].style.display = "none";
         cardsToDist[0].style.display = "none";
@@ -362,6 +384,8 @@ function fixScoreSelectorUI() {
   });
 }
 
+// ------------------- Winner Board Page -------------------
+
 function buildWinnerBoard() {
   var ranks = myGame.getRanks();
   ranks = Array.from(ranks);
@@ -372,4 +396,15 @@ function buildWinnerBoard() {
   for (let i = 1; i < ranks.length; i++) {
     otherRanks[0].innerHTML += `<h2>${ranks[i][1]}. ${ranks[i][0]}</h2>`;
   }
+}
+
+// ------------------- Session Storage -------------------
+
+function store(data) {
+  sessionStorage.setItem(key, data);
+}
+function fetch() {
+  let data = sessionStorage.getItem(key);
+  data = JSON.parse(data);
+  return data;
 }

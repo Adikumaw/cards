@@ -1,9 +1,8 @@
 import callBreak from "./CallBreak.js";
 
 const key = "all-father";
-let myGame = new callBreak();
+let myGame = new callBreak(fetch());
 let playerCount = 0;
-let roundsCount = 0;
 
 // ------------------- HTML components -------------------
 // ------------------- Navigation -------------------
@@ -40,17 +39,84 @@ const otherRanks = document.getElementsByClassName("other_ranks_div");
 var winImg = new Image();
 winImg.src = "resource/images/winner.gif";
 
-// ------------------- Restart and New Game button -------------------
+// ------------------- making UI to current State -------------------
+switch (myGame.getStatus()) {
+  case "new":
+    break;
+  case "rounds":
+    startGameContainer[0].style.display = "none";
+    playerCountContainer[0].style.display = "none";
+    inputNameClass[0].style.display = "none";
+    roundsContainer[0].style.display = "flex";
+    gameBody[0].style.display = "none";
+    winnerContainer[0].style.display = "none";
+    callContainer[0].style.display = "none";
+    scoreContainer[0].style.display = "none";
+    break;
+  case "call":
+    startGameContainer[0].style.display = "none";
+    playerCountContainer[0].style.display = "none";
+    inputNameClass[0].style.display = "none";
+    roundsContainer[0].style.display = "none";
+    gameBody[0].style.display = "flex";
+    setupGameBody("call");
+    break;
+  case "score":
+    startGameContainer[0].style.display = "none";
+    playerCountContainer[0].style.display = "none";
+    inputNameClass[0].style.display = "none";
+    roundsContainer[0].style.display = "none";
+    gameBody[0].style.display = "flex";
+    setupGameBody("score");
+    break;
+  case "win":
+    startGameContainer[0].style.display = "none";
+    playerCountContainer[0].style.display = "none";
+    inputNameClass[0].style.display = "none";
+    roundsContainer[0].style.display = "none";
+    gameBody[0].style.display = "flex";
+    callContainer[0].style.display = "none";
+    cardsToDist[0].style.display = "none";
+    winnerContainer[0].style.display = "flex";
+    buildWinnerBoard();
+    break;
 
+  default:
+    console.log("wrong gameStatus in record...");
+    break;
+}
+// number of players input state
+
+// ------------------- Restart and New Game button -------------------
 // New game button click action
+
 newGame[0].addEventListener("click", () => {
-  window.location.reload();
+  myGame.newGame();
+  startGameContainer[0].style.display = "none";
+  playerCountContainer[0].style.display = "flex";
+  inputNameClass[0].style.display = "none";
+  roundsContainer[0].style.display = "none";
+  gameBody[0].style.display = "none";
+  winnerContainer[0].style.display = "none";
+  callContainer[0].style.display = "none";
+  scoreContainer[0].style.display = "none";
+
+  // removing all previous score table
+  for (let i = scoreContainer[0].children.length - 1; i > 0; i--) {
+    scoreContainer[0].children[i].remove();
+  }
+  // removing all previous call table
+  for (let i = callContainer[0].children.length - 1; i > 0; i--) {
+    callContainer[0].children[i].remove();
+  }
+  winner[0].innerHTML = "";
+  otherRanks[0].innerHTML = "";
+  store(JSON.stringify(myGame));
 });
 // Re-start button click action
 restart[0].addEventListener("click", () => {
-  if (roundsCount != 0) {
+  if (myGame.getRounds() != 0) {
     myGame.resetGame();
-    roundsCount = 0;
     roundsContainer[0].style.display = "flex";
     gameBody[0].style.display = "none";
     winnerContainer[0].style.display = "none";
@@ -67,6 +133,7 @@ restart[0].addEventListener("click", () => {
     }
     winner[0].innerHTML = "";
     otherRanks[0].innerHTML = "";
+    store(JSON.stringify(myGame));
   }
 });
 
@@ -110,6 +177,9 @@ name_input.addEventListener("keypress", (event) => {
 });
 // takes player names and adds to the players, assures uniqueness of name
 function addPlayerName() {
+  // Trim for spaces
+  name_input.value = name_input.value.trim();
+
   // alert if name is empty
   if (name_input.value == "") {
     alert("please enter any name first");
@@ -139,6 +209,7 @@ function addPlayerName() {
         console.log(myGame.getPlayerNames());
         roundsContainer[0].style.display = "flex";
         // Saving data
+        myGame.setStatus("rounds");
         store(JSON.stringify(myGame));
       }
     }
@@ -151,28 +222,35 @@ function addPlayerName() {
 // Proceed to setup game
 roundsCountButton.forEach((button) => {
   button.addEventListener("click", function () {
-    setRoundsToPlay(parseInt(button.textContent));
+    // set roundsCount
+    myGame.setRounds(parseInt(button.textContent));
     roundsContainer[0].style.display = "none";
     gameBody[0].style.display = "flex";
-    setupGameBody();
+    setupGameBody("call");
+    store(JSON.stringify(myGame));
   });
 });
-// set roundsCount
-function setRoundsToPlay(num) {
-  roundsCount = parseInt(num);
-  myGame.setRounds(roundsCount);
-}
 
 // ------------------- Main game Page -------------------
 
-function setupGameBody() {
+function setupGameBody(status) {
   cardsToDist[0].textContent = `Distribute \"${Math.floor(
     52 / myGame.getPlayerCount()
   )}\" cards to each player!`;
   buildTable();
   buildCallSelector();
-  callContainer[0].style.display = "flex";
   buildScoreSelector();
+  switch (status) {
+    case "call":
+      callContainer[0].style.display = "flex";
+      break;
+    case "score":
+      scoreContainer[0].style.display = "flex";
+      break;
+    default:
+      console.log("wrong argument to setupGameBody..");
+      break;
+  }
 }
 
 function buildTable() {
@@ -190,7 +268,7 @@ function buildTable() {
   }
   // build scores row
   let playerScores = myGame.getPlayerScores();
-  for (let i = 0; i < roundsCount; i++) {
+  for (let i = 0; i < myGame.getRounds(); i++) {
     let row = table.insertRow();
     row.insertCell().textContent = "score";
     for (let player of myGame.getPlayerNames()) {
@@ -396,6 +474,7 @@ function buildWinnerBoard() {
   for (let i = 1; i < ranks.length; i++) {
     otherRanks[0].innerHTML += `<h2>${ranks[i][1]}. ${ranks[i][0]}</h2>`;
   }
+  buildTable();
 }
 
 // ------------------- Session Storage -------------------

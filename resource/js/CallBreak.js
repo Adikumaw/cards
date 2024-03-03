@@ -1,13 +1,26 @@
 import player from "./player.js";
 
 export default class callBreak {
-  constructor() {
-    // A map of player name and player Class
-    this.players = new Map();
-    this.rounds = 0;
-    this.currentRound = 1;
-    this.gameStatus = "new";
-    this.playersInString = new Array();
+  constructor(init) {
+    if (init == null || init.gameStatus == "new") {
+      // A map of player name and player Class
+      this.players = new Map();
+      this.rounds = 0;
+      this.currentRound = 1;
+      this.gameStatus = "new";
+      this.playersInString = new Array();
+    } else {
+      this.players = new Map();
+      this.rounds = init.rounds;
+      this.currentRound = init.currentRound;
+      this.gameStatus = init.gameStatus;
+      this.playersInString = init.playersInString;
+      // setup the player class
+      for (let initPlayer of init.playersInString) {
+        let playerData = JSON.parse(initPlayer);
+        this.players.set(playerData.name, new player(playerData));
+      }
+    }
   }
 
   // ------------------- game Controler -------------------
@@ -24,21 +37,37 @@ export default class callBreak {
     for (let [name, player] of this.players) {
       player.resetGame();
       this.currentRound = 1;
+      this.rounds = 0;
+      this.setStatus("rounds");
+      this.playersInString = this.toString();
     }
   }
   newGame() {
     this.players.clear();
     this.currentRound = 1;
+    this.rounds = 0;
+    this.setStatus("new");
+    this.playersInString = "";
   }
 
   // ------------------- Getters and Setters -------------------
   // set rounds to play
   setRounds(rounds) {
     this.rounds = rounds;
+    this.setStatus("call");
+  }
+  getRounds() {
+    return this.rounds;
   }
   // get current round
   getCurrentRound() {
     return this.currentRound;
+  }
+  setStatus(status) {
+    this.gameStatus = status;
+  }
+  getStatus() {
+    return this.gameStatus;
   }
 
   // ------------------- In game actions -------------------
@@ -69,7 +98,7 @@ export default class callBreak {
         player.calcScore();
       }
       this.currentRound++;
-      this.gameStatus = this.isRoundsLeft() ? "call" : "win";
+      this.setStatus(this.isRoundsLeft() ? "call" : "win");
       this.playersInString = this.toString();
       return true;
     }
@@ -162,7 +191,7 @@ export default class callBreak {
         return false;
       }
     }
-    this.gameStatus = "score";
+    this.setStatus("score");
     this.playersInString = this.toString();
     return true;
   }

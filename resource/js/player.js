@@ -1,15 +1,23 @@
 export default class player {
-  constructor(name) {
-    // Name of the player
-    this.name = name;
-    // Scores the player gained
-    this.scores = new Array();
-    // current call of player
-    this.call = 0;
-    // player row score
-    this.score = -1;
-    // total scores of the player
-    this.total = 0;
+  constructor(init) {
+    if (typeof init == "string") {
+      // Name of the player
+      this.name = init;
+      // Scores the player gained
+      this.scores = new Array();
+      // current call of player
+      this.call = 0;
+      // player row score
+      this.score = -1;
+      // total scores of the player
+      this.total = 0;
+    } else {
+      this.name = init.name;
+      this.scores = init.scores;
+      this.call = init.call;
+      this.score = init.score;
+      this.total = init.total;
+    }
   }
   // ---------------------- Getters & Setters ------------------
   setCall(call) {

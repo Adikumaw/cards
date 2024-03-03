@@ -480,10 +480,9 @@ function buildWinnerBoard() {
 // ------------------- Session Storage -------------------
 
 function store(data) {
-  sessionStorage.setItem(key, data);
+  localStorage.setItem(key, data);
 }
 function fetch() {
-  let data = sessionStorage.getItem(key);
-  data = JSON.parse(data);
-  return data;
+  let data = localStorage.getItem(key);
+  return data ? JSON.parse(data) : null;
 }

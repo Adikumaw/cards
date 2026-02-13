@@ -19,8 +19,8 @@ Hi there! I'm Aditya Kumawat, the developer behind this project. As a passionate
 3. **Select Rounds to play**: Select how much rounds you want to play.
 4. **Give Call for each player**: Simply select call of players and confirm call at last.
 5. **Give Score for each player**: Simply select score of players and confirm scores at last.
-7. **Viewing Records**: Explore your game records and track your progress over time.
-8. **Enjoying the Experience**: Sit back, relax, and enjoy playing Call Break knowing that your game data is safely tracked, stored and no one can cheat now.
+6. **Viewing Records**: Explore your game records and track your progress over time.
+7. **Enjoying the Experience**: Sit back, relax, and enjoy playing Call Break knowing that your game data is safely tracked, stored and no one can cheat now.
 
 ## Feedback and Contributions
 
@@ -28,6 +28,6 @@ Your feedback is valuable! If you have any suggestions, encounter issues, or wou
 
 ## Get Started
 
-Ready to track your Call Break game records? [Access the website](https://adikumaw.github.io/cards/) and start enjoying the experience!
+Ready to track your Call Break game records? [Access the website](https://kumawat-aditya.github.io/cards/) and start enjoying the experience!
 
 Thank you for choosing the Call-Break Cards Game Tracker. Happy gaming! 🃏
